@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Desafio WebJump</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
+<body>
+<div class="container content-center">
+	<h1>Desafio</h1>
+	<hr />
+	<form role="group" class="btn-group" onsubmit="return valida(this)">
+		<div class="palindrome">
+			<label class="content-center">Nome a ser inserido</label>
+			<div class="input-group">
+				<input type="text" id="txtName" placeholder="Nome" class="form-control"  />
+				<input type="submit" name="btnSubmit" value="Adicionar" />
+			</div>
+		</div>
+	</form>
+	<hr />
+	<label id="progress">...</label>
+</div>
+</body>
+<script type="text/javascript">
+	function valida(obj) {
+		var name = document.getElementById('txtName').value;
+		if (name.lenght < 100) {
+			document.getElementById('progress').innerHTML = "ADICIONANDO...";
+			var request = new XMLHttpRequest();
+			request.open('POST', './api/');
+			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			request.onreadystatechange = function () {
+			  if (this.readyState === 4) {
+			    console.log('Status:', this.status);
+			    // console.log('Headers:', this.getAllResponseHeaders());
+			    // console.log('Body:', this.responseText);
+				document.getElementById('txtName').value = "";
+				document.getElementById('progress').innerHTML = "PRONTO";
+			  }
+			};
+			var bodyData = "name="+name;
+			request.send(bodyData);
+		} else {
+			document.getElementById('progress').innerHTML = "NOME COM MAIS DE 100 CARACTERES.";
+		}
+		return false;
+	}
+</script>
+</html>

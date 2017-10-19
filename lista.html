@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Desafio WebJump</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
+<body>
+<div class="container content-center">
+	<h1>Desafio</h1>
+	<hr />
+	<form role="group" class="btn-group" onsubmit="return valida(this)">
+		<div class="palindrome">
+			<label class="content-center">Nome a ser pesquisado</label>
+			<div class="input-group">
+				<input type="text" id="txtName" onkeyup="valida(this)" placeholder="Nome a ser pesquisado" class="form-control"  />
+				<input type="submit" name="btnSubmit" value="Buscar" />
+			</div>
+		</div>
+	</form>
+	<hr />
+	<label id="progress">...</label>
+</div>
+</body>
+<script type="text/javascript">
+	function valida(obj) {
+
+		var request = new XMLHttpRequest();
+		var name = document.getElementById('txtName').value;
+		var url = './api/?name='+name;
+		request.open('GET', url);
+		request.onreadystatechange = function () {
+		  if (this.readyState === 4) {
+		    console.log('Status:', this.status);
+		    // console.log('Headers:', this.getAllResponseHeaders());
+		    // console.log('Body:', this.responseText);
+			document.getElementById('progress').innerHTML = this.responseText;
+		  }
+		};
+		request.send();
+		var request = new XMLHttpRequest();
+		return false;
+	}
+</script>
+</html>
